@@ -3,84 +3,127 @@
 import { FC } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ChartPie } from "lucide-react";
 import { CircularProgress } from "../circular-progress/circular-progress-ui";
-import { Metric, QuartorData, QuartorReportCardProps } from "./types";
-
-const MetricCard: FC<Metric> = ({ label, act, tgt, ach }) => (
-  <div className="relative flex items-center justify-between border-t border-border">
-    <div className="flex flex-col flex-1">
-      <Badge className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 text-[10px] bg-gradient-to-r from-slate-100 to-slate-50 text-slate-700 font-bold border border-slate-200/80 shadow-sm">
-        {label}
-      </Badge>
-
-      <div className="flex items-end gap-1">
-        <div>
-          <h1 className="text-base font-semibold text-slate-800">
-            {act.value}
-            {act.unit}
-          </h1>
-          <p className="text-[10px] font-semibold text-slate-500">(Actual)</p>
-        </div>
-        <div>
-          <h1 className="text-xs text-slate-400 font-medium">
-            / {tgt.value}
-            {tgt.unit}
-          </h1>
-          <p className="text-[10px] font-semibold text-slate-500">(Target)</p>
-        </div>
-      </div>
-    </div>
-
-    {ach && (
-      <div className="flex items-center gap-2">
-        <CircularProgress value={ach.value} title="Ach" />
-      </div>
-    )}
-  </div>
-);
+import { QuartorReportCardProps } from "./types";
 
 const QuartorReportCard: FC<QuartorReportCardProps> = ({ data }) => {
-  const metrics: Metric[] = [
-    {
-      key: "qty",
-      label: "Qty",
-      act: data.act_qty,
-      tgt: data.tgt_qty,
-      ach: data.qty_ach ?? null,
-    },
-    {
-      key: "rev",
-      label: "Rev",
-      act: data.act_rev,
-      tgt: data.tgt_rev,
-      ach: data.rev_ach ?? null,
-    },
-    {
-      key: "arv",
-      label: "ARV",
-      act: data.act_avg,
-      tgt: data.tgt_avg,
-    },
-  ];
+  const {
+    act_qty,
+    tgt_qty,
+    qty_ach,
+    act_rev,
+    tgt_rev,
+    rev_ach,
+    act_avg,
+    tgt_avg,
+  } = data;
 
   return (
-    <Card className="w-full p-2 flex flex-col gap-0 hover:bg-muted/40 shadow-none">
-      <div className="text-sm pb-4 flex items-center gap-2 font-semibold tracking-wider uppercase text-foreground">
-        <ChartPie className="size-6 text-primary" />
-        {data.table}
+    <Card className="w-full p-2 flex flex-col gap-1.5 rounded-2xl shadow-none hover:bg-muted/20 transition-all duration-200">
+      {/* Title */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-sm font-semibold tracking-wide uppercase text-foreground">
+          {data.table}
+        </h2>
+        <Badge
+          variant="secondary"
+          className="text-[10px] font-medium rounded-full px-2 py-0.5"
+        >
+          Report
+        </Badge>
       </div>
 
-      <CardContent className="flex flex-col gap-1.5 p-0">
-        {metrics.map((m) => (
-          <MetricCard
-            key={m.key}
-            label={m.label}
-            act={m.act}
-            tgt={m.tgt}
-            ach={m.ach}
-          />
-        ))}
+      <CardContent className="flex flex-col gap-2 p-0">
+        {/* Qty Section */}
+        <div className="flex items-center justify-between border-t border-border pt-2">
+          <div className="flex flex-row gap-2 items-center">
+            <div className="flex flex-col">
+              <span className="text-[11px] text-muted-foreground">
+                Actual Qty
+              </span>
+              <span className="text-lg font-bold text-foreground">
+                {act_qty.value}
+                <span className="ml-1 text-[11px] text-muted-foreground">
+                  {act_qty.unit}
+                </span>
+              </span>
+            </div>
+            <span className="text-muted-foreground font-medium">/</span>
+            <div className="flex flex-col">
+              <span className="text-[11px] text-muted-foreground">
+                Target Qty
+              </span>
+              <span className="text-sm font-medium text-foreground">
+                {tgt_qty.value}
+                <span className="ml-1 text-[11px] text-muted-foreground">
+                  {tgt_qty.unit}
+                </span>
+              </span>
+            </div>
+          </div>
+
+          {qty_ach && <CircularProgress title="Ach" value={qty_ach.value} />}
+        </div>
+
+        {/* Revenue Section */}
+        <div className="flex items-center justify-between border-t border-border pt-2">
+          <div className="flex flex-row gap-2 items-center">
+            <div className="flex flex-col">
+              <span className="text-[11px] text-muted-foreground">
+                Actual Rev
+              </span>
+              <span className="text-lg font-bold text-foreground">
+                {act_rev.value}
+                <span className="ml-1 text-[11px] text-muted-foreground">
+                  {act_rev.unit}
+                </span>
+              </span>
+            </div>
+            <span className="text-muted-foreground font-medium">/</span>
+            <div className="flex flex-col">
+              <span className="text-[11px] text-muted-foreground">
+                Target Rev
+              </span>
+              <span className="text-sm font-medium text-foreground">
+                {tgt_rev.value}
+                <span className="ml-1 text-[11px] text-muted-foreground">
+                  {tgt_rev.unit}
+                </span>
+              </span>
+            </div>
+          </div>
+
+          {rev_ach && <CircularProgress title="Ach" value={rev_ach.value} />}
+        </div>
+
+        {/* ARV Section */}
+        <div className="flex items-center justify-between border-t border-border pt-2">
+          <div className="flex flex-row gap-2 items-center">
+            <div className="flex flex-col">
+              <span className="text-[11px] text-muted-foreground">
+                Actual ARV
+              </span>
+              <span className="text-lg font-bold text-foreground">
+                {act_avg.value}
+                <span className="ml-1 text-[11px] text-muted-foreground">
+                  {act_avg.unit}
+                </span>
+              </span>
+            </div>
+            <span className="text-muted-foreground font-medium">/</span>
+            <div className="flex flex-col">
+              <span className="text-[11px] text-muted-foreground">
+                Target ARV
+              </span>
+              <span className="text-sm font-medium text-foreground">
+                {tgt_avg.value}
+                <span className="ml-1 text-[11px] text-muted-foreground">
+                  {tgt_avg.unit}
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

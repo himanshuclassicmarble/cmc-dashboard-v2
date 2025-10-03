@@ -40,12 +40,12 @@ const PerformanceCardV3: FC<PerformanceCardProps> = ({ data }) => {
                 </span>
               </span>
             </div>
-            <span className="text-slate-400 font-medium">/</span>
+            <span className="text-muted-foreground font-medium">/</span>
             <div className="flex flex-col">
               <span className="text-[11px] text-muted-foreground">
                 Prev Year
               </span>
-              <span className="text-sm font-medium text-slate-500">
+              <span className="text-sm font-medium text-foreground">
                 {py}
                 <span className="ml-1 text-[11px] text-muted-foreground">
                   {data.unit}

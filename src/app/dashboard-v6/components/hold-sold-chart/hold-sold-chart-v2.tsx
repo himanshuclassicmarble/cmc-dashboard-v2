@@ -81,7 +81,7 @@ export const HoldSoldChartV2: React.FC<HoldSoldChartProps> = ({
                 Quantity{" "}
                 <span className="font-semibold text-foreground">(sq.ft.)</span>
               </div>
-              <div className="text-sm font-bold text-primary text-left">
+              <div className="text-sm font-bold text-foreground text-left">
                 {formatValue(sanitizedTotals.sold.soldQuantity)}K
               </div>
             </div>
@@ -98,7 +98,7 @@ export const HoldSoldChartV2: React.FC<HoldSoldChartProps> = ({
                 Quantity{" "}
                 <span className="font-semibold text-foreground">(sq.ft.)</span>
               </div>
-              <div className="text-sm font-bold text-primary text-left">
+              <div className="text-sm font-bold text-foreground text-left">
                 {formatValue(sanitizedTotals.hold.holdQuantity)}K
               </div>
             </div>
