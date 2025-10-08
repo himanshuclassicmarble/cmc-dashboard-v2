@@ -4,4 +4,5 @@ export interface CircularProgressProps {
   size?: number;
   innerRadius?: number;
   outerRadius?: number;
+  className?: string;
 }

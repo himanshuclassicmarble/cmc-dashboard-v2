@@ -3,13 +3,13 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnalyticsChartProps } from "./types";
-import { useScreenSize } from "./hooks/use-screensize";
 import { useDataTransform } from "./hooks/use-data-transform";
 import { getVisibleDataCount } from "./utils/responsive-chart";
 import { ErrorState } from "./_subcomponent/error-state";
 import { Chart } from "./_subcomponent/trend-chart";
 import { ScrollControl } from "./_subcomponent/scroll-control";
 import { TabHeader } from "./_subcomponent/tab-header";
+import { useScreenSize } from "./hooks/use-screensize";
 
 export default function AnalyticsChart({ data }: AnalyticsChartProps) {
   const [scrollPosition, setScrollPosition] = useState(0);

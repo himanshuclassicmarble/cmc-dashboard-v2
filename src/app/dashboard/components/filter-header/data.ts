@@ -5,7 +5,7 @@ export const marbleTypes: string[] = ["Artificial", "Natural", "Ceramic"];
 export const executives: Executive[] = [
   {
     id: 1,
-    name: "Sarah Johnson",
+    name: "Sarah Jessica Peter Parker",
     designation: "Sales Director",
     email: "sarah.johnson@company.com",
     avatar: "https://github.com/shadcn.png",

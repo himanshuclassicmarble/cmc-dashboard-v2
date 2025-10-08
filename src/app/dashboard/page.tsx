@@ -41,13 +41,20 @@ const DashboardV6: React.FC = () => {
       {/* Header */}
       <FilterHeader executives={executives} marbleTypes={marbleTypes} />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto flex flex-col p-2 gap-2">
+      <main
+        className={`
+          flex-1 w-full max-w-7xl mx-auto flex flex-col
+          p-2
+          gap-6 md:gap-2
+        `}
+      >
         {/* Top Section */}
-        <div className="flex flex-col gap-2 w-full">
-          <PerformanceView />
-          <AnalyticsChart data={AnalyticsChartData} />
-
-          <div className="flex flex-col md:flex-row gap-2">
+        <div className="flex flex-col gap-6 md:gap-2 w-full">
+          <div className="flex flex-col gap-2">
+            <PerformanceView />
+            <AnalyticsChart data={AnalyticsChartData} />
+          </div>
+          <div className="flex flex-col md:flex-row gap-6 md:gap-2">
             <div className="flex-1 h-[350px]">
               <CRMCard data={CRMdata} />
             </div>
@@ -63,10 +70,12 @@ const DashboardV6: React.FC = () => {
 
         {/* Unified Responsive Layout */}
         <div
-          className="grid gap-2
-                        sm:grid-cols-1
-                        md:grid-cols-2
-                        lg:grid-cols-10"
+          className={`
+            grid gap-6 md:gap-2
+            sm:grid-cols-1
+            md:grid-cols-2
+            lg:grid-cols-10
+          `}
         >
           {/* Associate Info + Quartor (full width) */}
           <div className="col-span-full flex flex-col gap-2">
@@ -82,27 +91,32 @@ const DashboardV6: React.FC = () => {
             <TopColors
               colors={topColors}
               grandTotal={grandTotal}
-              className="h-[400px]"
+              className="h-full max-h-[400px]"
+              quartor={associateData.quarter}
             />
           </div>
 
           {/* Sales Tables */}
-          <div className="col-span-full md:col-span-2 lg:col-span-6 grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className="col-span-full md:col-span-2 lg:col-span-6 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-2">
             <SalesTable
               table={customerSalesTable}
               className="h-[300px] lg:h-[400px]"
+              quartor={associateData.quarter}
             />
             <SalesTable
               table={qualitiesSalesTable}
               className="h-[300px] lg:h-[400px]"
+              quartor={associateData.quarter}
             />
             <SalesTable
               table={zoneWiseSalesTable}
-              className="h-[300px] lg:h-60"
+              className="h-full max-h-[400px]"
+              quartor={associateData.quarter}
             />
             <SalesTable
               table={channelWiseSalesTable}
-              className="h-[300px] lg:h-60"
+              className="h-full max-h-[400px]"
+              quartor={associateData.quarter}
             />
           </div>
         </div>

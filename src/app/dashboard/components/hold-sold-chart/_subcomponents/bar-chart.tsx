@@ -25,7 +25,7 @@ export const Chart: React.FC<{ data: ChartDataItem[] }> = ({ data }) => {
       <ResponsiveContainer width="100%" height="100%">
         <ChartContainer
           config={CHART_CONFIG}
-          className="h-full max-h-[170px] w-full"
+          className="h-full max-h-[180px] w-full"
         >
           <BarChart
             accessibilityLayer

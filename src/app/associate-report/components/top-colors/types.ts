@@ -23,4 +23,5 @@ export interface ColorProps {
     ARV: number;
   };
   className?: string;
+  quartor: string;
 }

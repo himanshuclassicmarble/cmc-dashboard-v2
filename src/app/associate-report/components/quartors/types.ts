@@ -13,7 +13,7 @@ export interface Metric {
   label: string; // UI label like "Qty", "Rev"
   act: MetricValue;
   tgt: MetricValue;
-  ach?: MetricValue | null;
+  ach?: MetricValue;
 }
 
 // The raw data shape for each quarter / table (matches your data file)
@@ -22,11 +22,11 @@ export interface QuartorData {
 
   tgt_qty: MetricValue;
   act_qty: MetricValue;
-  qty_ach?: MetricValue | null;
+  qty_ach?: MetricValue;
 
   tgt_rev: MetricValue;
   act_rev: MetricValue;
-  rev_ach?: MetricValue | null;
+  rev_ach?: MetricValue;
 
   tgt_avg: MetricValue;
   act_avg: MetricValue;

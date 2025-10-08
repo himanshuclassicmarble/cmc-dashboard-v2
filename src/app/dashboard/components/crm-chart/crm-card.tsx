@@ -1,29 +1,32 @@
+"use client";
+
 import React from "react";
+import { TrendingUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Bar,
   BarChart,
-  CartesianGrid,
-  LabelList,
   XAxis,
   YAxis,
   Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+  LabelList,
 } from "recharts";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
-import { TrendingUp } from "lucide-react";
 import { CRMCardProps, CrmDataPoint, CrmDataProps } from "./types";
 
+// Chart configuration for Shadcn ChartContainer
 const chartConfig = {
   counts: {
     label: "Counts",
     color: "var(--chart-1)",
   },
-  label: {
-    color: "var(--background)",
-  },
 } satisfies ChartConfig;
 
+// Inner chart component
 const CrmChart: React.FC<CrmDataProps> = ({ chartData }) => {
+  // Validate data
   const validatedData = chartData.map((item) => ({
     ...item,
     counts:
@@ -35,33 +38,28 @@ const CrmChart: React.FC<CrmDataProps> = ({ chartData }) => {
   }));
 
   return (
-    <div className="w-full">
-      <ChartContainer
-        config={chartConfig}
-        className="w-full h-full max-h-[150px] p-0"
-      >
+    <ChartContainer config={chartConfig} className="w-full h-[160px] p-0">
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={validatedData}
           layout="vertical"
-          barSize={20}
-          margin={{ top: 0, right: 40, bottom: 0, left: 10 }}
+          barSize={18}
+          margin={{ top: 0, right: 30, bottom: 0, left: 10 }}
         >
           <CartesianGrid horizontal={false} />
           <YAxis
             dataKey="name"
             type="category"
-            tickLine={false}
+            tickMargin={20}
             axisLine={false}
-            tickMargin={15}
-            fontSize={8}
+            fontSize={10}
+            width={80} // prevent cutoff
           />
           <XAxis
-            dataKey="counts"
             type="number"
-            tickLine={false}
             axisLine={false}
-            tickMargin={0}
-            fontSize={8}
+            tickLine={false}
+            fontSize={10}
             unit=" Nos"
           />
           <Tooltip
@@ -102,87 +100,74 @@ const CrmChart: React.FC<CrmDataProps> = ({ chartData }) => {
               return null;
             }}
           />
-          <Bar
-            dataKey="counts"
-            layout="vertical"
-            fill="var(--color-counts)"
-            radius={0}
-          >
+          <Bar dataKey="counts" fill="var(--color-counts)" radius={0}>
             <LabelList
               dataKey="counts"
               position="insideRight"
-              offset={2}
-              className="fill-foreground"
+              className="fill-foreground font-medium"
               fontSize={10}
             />
             <LabelList
               dataKey="change"
               position="right"
-              offset={2}
+              offset={4}
               className="fill-foreground font-medium"
               fontSize={10}
             />
           </Bar>
         </BarChart>
-      </ChartContainer>
-    </div>
+      </ResponsiveContainer>
+    </ChartContainer>
   );
 };
 
-// Format value function
+// Helper to format numbers
 const formatValue = (value: number): string =>
   value.toLocaleString("en-IN", {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   });
 
-// Main CRM Card Component
+// Main CRM Card
 const CRMCard: React.FC<CRMCardProps> = ({ data }) => {
   return (
-    <Card className="w-full h-full  p-0 flex flex-col gap-1.5 rounded-2xl shadow-none hover:bg-muted/20 transition-all duration-200">
-      <CardContent className="p-1.5 space-y-1.5">
-        <div className="pt-2 px-2 sm:text-sm lg:text-lg font-medium text-foreground truncate flex items-center gap-2">
+    <Card className="w-full h-full p-0 flex flex-col gap-1.5 rounded-2xl shadow-none hover:bg-muted/20 transition-all duration-200">
+      <div className="pt-3 px-4 pb-0 text-sm text-foreground flex flex-col items-start gap-0.5">
+        <h1 className="flex items-center gap-2 sm:text-sm lg:text-lg">
           <TrendingUp className="h-4 w-4 text-primary" />
           CRM Data
-        </div>
+        </h1>
+      </div>
 
-        {/* Data Grid */}
-        <div className="flex flex-row gap-1">
+      <CardContent className="space-y-2 p-2">
+        {/* Data grid: 3 columns always */}
+        <div className="grid grid-cols-3 gap-2">
           {data.map((item) => (
             <div
               key={item.name}
-              className="flex-1 space-y-1 border border-border rounded-lg px-1.5 py-1.5"
+              className="space-y-1 border border-border rounded-lg px-2 py-2"
             >
-              {/* Stage Name */}
-              <div className="text-[10px] font-semibold text-foreground uppercase tracking-wide text-left">
+              <div className="text-[10px] font-semibold text-foreground uppercase tracking-wide">
                 {item.name}
               </div>
 
               <div className="space-y-1">
-                {/* Counts */}
-                <div className="space-y-0.5">
-                  <div className="text-[9px] font-medium text-muted-foreground uppercase tracking-wide text-left">
-                    Counts{" "}
-                    <span className="font-semibold text-foreground">
-                      (Nos.)
-                    </span>
-                  </div>
-                  <div className="text-sm font-bold text-foreground text-left">
-                    {formatValue(item.counts)}
-                  </div>
+                <div className="text-[9px] font-medium text-muted-foreground uppercase tracking-wide">
+                  Counts{" "}
+                  <span className="font-semibold text-foreground">(Nos.)</span>
+                </div>
+                <div className="text-sm font-bold text-foreground">
+                  {formatValue(item.counts)}
                 </div>
 
-                {/* Quantity */}
-                <div className="space-y-0.5">
-                  <div className="text-[9px] font-medium text-muted-foreground uppercase tracking-wide text-left">
-                    Quantity{" "}
-                    <span className="font-semibold text-foreground">
-                      (sq.ft.)
-                    </span>
-                  </div>
-                  <div className="text-sm font-bold text-foreground text-left">
-                    {formatValue(item.quantity)}K
-                  </div>
+                <div className="text-[9px] font-medium text-muted-foreground uppercase tracking-wide">
+                  Quantity{" "}
+                  <span className="font-semibold text-foreground">
+                    (sq.ft.)
+                  </span>
+                </div>
+                <div className="text-sm font-bold text-foreground">
+                  {formatValue(item.quantity)}K
                 </div>
               </div>
             </div>
@@ -190,7 +175,7 @@ const CRMCard: React.FC<CRMCardProps> = ({ data }) => {
         </div>
 
         {/* Chart */}
-        <div className="flex items-center justify-center">
+        <div className="w-full">
           <CrmChart chartData={data} />
         </div>
       </CardContent>

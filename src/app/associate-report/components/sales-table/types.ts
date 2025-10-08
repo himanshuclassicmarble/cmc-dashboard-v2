@@ -24,4 +24,5 @@ export type SalesTableProps = {
   table: SalesTableUnit;
   tableColor?: string;
   className?: string;
+  quartor: string;
 };

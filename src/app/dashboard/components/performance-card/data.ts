@@ -13,7 +13,7 @@ export const performanceCardData: Record<string, PerformanceCardTypes[]> = {
       title: "Quantity",
       subtitle: "Quantitiy in Sq.ft",
       unit: "K",
-      metrics: { cy: 150, py: 120, goly: 25, budget: 200, ach: 75 },
+      metrics: { cy: 150, py: 120, goly: 100, budget: 200, ach: 101 },
     },
     {
       title: "Value",
